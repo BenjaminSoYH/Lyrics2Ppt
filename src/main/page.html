@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <style>
+    #textz {
+      font-size: 500%;
+      text-align: center;
+      color: white;
+    }
+    div {
+      display: grid;
+      place-items: center;
+      height: 100vh;
+    }
+    body {
+      background-image: url('https://www.churchmotiongraphics.com/wp-content/uploads/2018/02/Feature.jpg');
+      background-size: 100% 100%;
+      overflow: hidden;
+    }
+
+  </style>
+  <script>
+    window.onload = function () {
+      window.addEventListener('message', function (event) {
+      console.log(event.data);
+        document.getElementById('textz').innerHTML = event.data;
+      });
+    }
+  </script>
+</head>
+<body>
+  <div>
+    <h1 id="textz">.</h1>
+  </div>
+</body>
+</html>

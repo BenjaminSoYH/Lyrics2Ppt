@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <style>
+        #inputBox {
+            height: 100%;
+            width: 80%;
+        }
+        .button {
+            height: 4em;
+            width: 6em;
+            vertical-align: middle;
+        }
+        #selSlide {
+            display: grid;
+            grid-template-columns: auto auto auto;
+            row-gap: 1em;
+            text-align: center;
+        }
+    </style>
+    <script>
+        var count = 0;
+        let myList = [];
+        function runText() {
+            count = -1;
+
+            const textValue = document.getElementById('inputBox').value;
+            myList = textValue.split('\n\n');
+            pagewindow = window.open('page.html','ppt');
+
+            document.getElementById("selSlide").innerHTML = "";
+            const selSl = document.getElementById("selSlide");
+
+            for (let i = 0; i < myList.length; i++) {
+                const slid = document.createElement('button');
+                slid.style.length = '4em';
+                slid.style.height = '6em';
+
+                slid.onclick = function () {
+                    count = i;
+                    pagewindow.postMessage(myList[count],'*')
+                    document.getElementById("something").innerHTML = myList[count]
+                }
+                slid.appendChild(document.createTextNode(myList[i]));
+
+                selSl.appendChild(slid);
+
+            }
+            console.log(myList.length);
+        }
+
+        function updatePage() {
+            if (pagewindow) {
+                document.getElementById("something").innerHTML = myList[count].replace(/\n/g, "<br>");
+                pagewindow.postMessage(myList[count].replace(/\n/g, "<br>"), '*');
+            }
+        }
+
+        function next() {
+            if (count < myList.length - 1) {
+                count++;
+                updatePage();
+            }
+        }
+        function back() {
+            if (count >0) {
+                count--;
+                updatePage();
+            }
+        }
+
+    </script>
+</head>
+<body>
+
+<header style="text-align: center; height: 400px; padding: 5%">
+  <textarea id="inputBox"></textarea>
+</header>
+
+    <nav style="text-align: center; ">
+         <button onclick="runText()" class="button"> Run button</button>
+        <button class="button" onclick="back()">back</button>
+        <button class="button" onclick="next()">next</button>
+
+        <h1 id="something" style>test</h1>
+    </nav>
+
+    <section id="selSlide" ></section>
+</body>
+</html>
+
