@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<style>
+    textarea {
+        width: 80vw;
+        height: 30vh;
+    }
+</style>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bible bowl to excel converter</title>
+    <textarea id="texts"></textarea>
+    <button onclick="submit()">submit</button>
+</head>
+
+<script>
+
+    function textToArray() {
+        let arr = id("texts").value.replaceAll(/\n|\t/g, "")
+            .replaceAll(',','،') ///somehow commas break the csv conversion
+            .split(/\[[a-z]\]|A\.|:[1-9]+\)/g);
+
+        for (let i = arr.length - 1; i >= 0; i--) {
+            if (arr[i].trim() === "") {
+                arr.splice(i, 1);
+            }
+        }
+        return arr;
+    }
+
+    function arrayToQuestion(arr) {
+        const qna = [];
+        for (let i = 0; i < arr.length; i+=2) {
+            qna.push([arr[i],arr[i+1].replaceAll(/\(.*$/g, "")]);
+        }
+        return qna;
+    }
+    function submit() {
+        let qna = (arrayToQuestion(textToArray()));
+        downloadCSV(qna);
+    }
+    function downloadCSV(data) {
+        const csvContent = "data:text/csv;charset=utf-8," + data.map(row => row.join(",")).join("\n");
+        const encodedUri = encodeURI(csvContent);
+        const link = document.createElement("a");
+        link.setAttribute("href", encodedUri);
+        link.setAttribute("download", "data.asv");
+        document.body.appendChild(link); // Required for Firefox
+        link.click();
+    }
+
+    function id(name) {
+        return document.getElementById(name);
+    }
+</script>
+
+<body>

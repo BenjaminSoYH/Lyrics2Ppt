@@ -32,7 +32,7 @@ public class createSlide {
         title1.clearText();
         XSLFTextParagraph para = title1.addNewTextParagraph();
         XSLFTextRun run = para.addNewTextRun();
-        run.setFontColor(Color.white);
+        run.setFontColor(Color.black);
         run.setFontSize(80.0);
         run.setText(words);
         title1.setAnchor(new Rectangle((width- (int) (width*0.9))/2,(height- (int) (height*0.9))/2, (int) (width*0.9), (int) (height*0.9)));

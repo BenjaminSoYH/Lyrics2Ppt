@@ -17,7 +17,7 @@ public class main {
     static int height = 1080;
     public static void main(String[] args) throws Exception {
         XMLSlideShow ppt = new XMLSlideShow();
-        String pic = "src/main/java/backgroundimage.png";
+        String pic = "src/main/java/newbackground.png";
         String file = "src/main/java/copyfromthis.pptx";
 
 
